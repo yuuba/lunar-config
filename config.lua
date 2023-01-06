@@ -2,11 +2,10 @@
  THESE ARE EXAMPLE CONFIGS FEEL FREE TO CHANGE TO WHATEVER YOU WANT
  `lvim` is the global options object
 ]]
-
 -- vim options
 vim.opt.shiftwidth = 2
 vim.opt.tabstop = 2
-vim.opt.relativenumber = false 
+vim.opt.relativenumber = false
 
 -- general
 lvim.log.level = "info"
@@ -23,7 +22,7 @@ lvim.leader = "space"
 -- add your own keymapping
 lvim.keys.normal_mode["<C-s>"] = ":w<cr>"
 lvim.keys.normal_mode["<C-r>"] = "!node %<cr>"
-    -- vim.api.nvim_set_keymap("n", "n", ":HopWord<cr>", { silent = true })
+-- vim.api.nvim_set_keymap("n", "n", ":HopWord<cr>", { silent = true })
 lvim.keys.normal_mode["q"] = ":HopChar1<cr>"
 lvim.keys.normal_mode["Q"] = ":HopLineStart<cr>"
 -- lvim.keys.normal_mode["<S-l>"] = ":BufferLineCycleNext<CR>"
@@ -97,73 +96,112 @@ lvim.builtin.treesitter.auto_install = true
 
 -- -- Additional Plugins <https://www.lunarvim.org/docs/plugins#user-plugins>
 lvim.plugins = {
-    {
-      "folke/trouble.nvim",
-      cmd = "TroubleToggle",
-    },
   {
-  "phaazon/hop.nvim",
-  event = "BufRead",
-  config = function()
-    require("hop").setup()
-    -- vim.api.nvim_set_keymap("n", "s", ":HopChar2<cr>", { silent = true })
-    -- vim.api.nvim_set_keymap("n", "n", ":HopWord<cr>", { silent = true })
-    -- vim.api.nvim_set_keymap("f", ":HopWord<cr>", { silent = true })
-  end,
-},
+    "folke/trouble.nvim",
+    cmd = "TroubleToggle",
+  },
   {
-  "windwp/nvim-ts-autotag",
-  config = function()
-    require("nvim-ts-autotag").setup()
-  end,
-},
+    "phaazon/hop.nvim",
+    event = "BufRead",
+    config = function()
+      require("hop").setup()
+    end,
+  },
   {
-  "norcalli/nvim-colorizer.lua",
+    "windwp/nvim-ts-autotag",
+    config = function()
+      require("nvim-ts-autotag").setup()
+    end,
+  },
+  {
+    "norcalli/nvim-colorizer.lua",
     config = function()
       require("colorizer").setup({ "css", "scss", "html", "javascript" }, {
-          RGB = true, -- #RGB hex codes
-          RRGGBB = true, -- #RRGGBB hex codes
-          RRGGBBAA = true, -- #RRGGBBAA hex codes
-          rgb_fn = true, -- CSS rgb() and rgba() functions
-          hsl_fn = true, -- CSS hsl() and hsla() functions
-          css = true, -- Enable all CSS features: rgb_fn, hsl_fn, names, RGB, RRGGBB
-          css_fn = true, -- Enable all CSS *functions*: rgb_fn, hsl_fn
-          })
-  end,
-},
+        RGB = true, -- #RGB hex codes
+        RRGGBB = true, -- #RRGGBB hex codes
+        RRGGBBAA = true, -- #RRGGBBAA hex codes
+        rgb_fn = true, -- CSS rgb() and rgba() functions
+        hsl_fn = true, -- CSS hsl() and hsla() functions
+        css = true, -- Enable all CSS features: rgb_fn, hsl_fn, names, RGB, RRGGBB
+        css_fn = true, -- Enable all CSS *functions*: rgb_fn, hsl_fn
+      })
+    end,
+  },
+  -- {
+  --   "Pocco81/auto-save.nvim",
+  --   config = function()
+  --     require("auto-save").setup()
+  --   end,
+  -- },
   {
-  "Pocco81/auto-save.nvim",
-  config = function()
-    require("auto-save").setup()
-  end,
-},
-  {
-  "karb94/neoscroll.nvim",
-  event = "WinScrolled",
-  config = function()
-  require('neoscroll').setup({
+    "karb94/neoscroll.nvim",
+    event = "WinScrolled",
+    config = function()
+      require('neoscroll').setup({
         -- All these keys will be mapped to their corresponding default scrolling animation
-        mappings = {'<C-u>', '<C-d>', '<C-b>', '<C-f>',
-        '<C-y>', '<C-e>', 'zt', 'zz', 'zb'},
-        hide_cursor = true,          -- Hide cursor while scrolling
-        stop_eof = true,             -- Stop at <EOF> when scrolling downwards
+        mappings = { '<C-u>', '<C-d>', '<C-b>', '<C-f>',
+          '<C-y>', '<C-e>', 'zt', 'zz', 'zb' },
+        hide_cursor = true, -- Hide cursor while scrolling
+        stop_eof = true, -- Stop at <EOF> when scrolling downwards
         use_local_scrolloff = false, -- Use the local scope of scrolloff instead of the global scope
-        respect_scrolloff = false,   -- Stop scrolling when the cursor reaches the scrolloff margin of the file
+        respect_scrolloff = false, -- Stop scrolling when the cursor reaches the scrolloff margin of the file
         cursor_scrolls_alone = true, -- The cursor will keep on scrolling even if the window cannot scroll further
-        easing_function = nil,        -- Default easing function
-        pre_hook = nil,              -- Function to run before the scrolling animation starts
-        post_hook = nil,              -- Function to run after the scrolling animation ends
-        })
-  end
-},
+        easing_function = nil, -- Default easing function
+        pre_hook = nil, -- Function to run before the scrolling animation starts
+        post_hook = nil, -- Function to run after the scrolling animation ends
+      })
+    end
+  },
   {
-  "tpope/vim-surround",
-  
-  -- make sure to change the value of `timeoutlen` if it's not triggering correctly, see https://github.com/tpope/vim-surround/issues/117
-  -- setup = function()
+    "tpope/vim-surround",
+
+    -- make sure to change the value of `timeoutlen` if it's not triggering correctly, see https://github.com/tpope/vim-surround/issues/117
+    -- setup = function()
     --  vim.o.timeoutlen = 500
-  -- end
-},
+    -- end
+  },
+  {
+    "aca/emmet-ls",
+    config = function()
+      local lspconfig = require("lspconfig")
+      local configs = require("lspconfig/configs")
+
+      local capabilities = vim.lsp.protocol.make_client_capabilities()
+      capabilities.textDocument.completion.completionItem.snippetSupport = true
+      capabilities.textDocument.completion.completionItem.resolveSupport = {
+        properties = {
+          "documentation",
+          "detail",
+          "additionalTextEdits",
+        },
+      }
+
+      if not lspconfig.emmet_ls then
+        configs.emmet_ls = {
+          default_config = {
+            cmd = { "emmet-ls", "--stdio" },
+            filetypes = {
+              "html",
+              "css",
+              "javascript",
+              "typescript",
+              "eruby",
+              "typescriptreact",
+              "javascriptreact",
+              "svelte",
+              "vue",
+            },
+            root_dir = function(fname)
+              return vim.loop.cwd()
+            end,
+            settings = {},
+          },
+        }
+      end
+      lspconfig.emmet_ls.setup({ capabilities = capabilities })
+    end,
+  },
+
 }
 
 -- -- Autocommands (`:help autocmd`) <https://neovim.io/doc/user/autocmd.html>
@@ -174,10 +212,13 @@ lvim.plugins = {
 --     require("nvim-treesitter.highlight").attach(0, "bash")
 --   end,
 -- })
--- local formatters = require "lvim.lsp.null-ls.formatters"
--- formatters.setup {
---   {
---     command = "prettier",
---     filetypes = { "typescript", "typescriptreact" },
---   },
--- }
+local formatters = require "lvim.lsp.null-ls.formatters"
+
+formatters.setup {
+  {
+    command = "prettier",
+    filetypes = { "typescript", "typescriptreact", "scss" },
+
+  },
+
+}
