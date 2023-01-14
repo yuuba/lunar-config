@@ -11,6 +11,7 @@ vim.opt.relativenumber = false
 lvim.log.level = "info"
 lvim.format_on_save = {
   enabled = true,
+  -- pattern = "*.html, *.js, *.css, *.scss",
   pattern = "*.*",
   timeout = 1000,
 }
@@ -21,7 +22,7 @@ lvim.format_on_save = {
 lvim.leader = "space"
 -- add your own keymapping
 lvim.keys.normal_mode["<C-s>"] = ":w<cr>"
-lvim.keys.normal_mode["<C-r>"] = "!node %<cr>"
+lvim.keys.normal_mode["<C-`>"] = ":w | !node %<cr>"
 -- vim.api.nvim_set_keymap("n", "n", ":HopWord<cr>", { silent = true })
 lvim.keys.normal_mode["q"] = ":HopChar1<cr>"
 lvim.keys.normal_mode["Q"] = ":HopLineStart<cr>"
@@ -33,7 +34,7 @@ lvim.keys.normal_mode["Q"] = ":HopLineStart<cr>"
 -- lvim.builtin.which_key.mappings["P"] = { "<cmd>Telescope projects<CR>", "Projects" }
 
 -- -- Change theme settings
--- lvim.colorscheme = "lunar"
+lvim.colorscheme = "gruvbox"
 
 -- After changing plugin config exit and reopen LunarVim, Run :PackerSync
 lvim.builtin.alpha.active = true
@@ -51,7 +52,7 @@ lvim.builtin.treesitter.auto_install = true
 -- -- generic LSP settings <https://www.lunarvim.org/docs/languages#lsp-support>
 
 -- --- disable automatic installation of servers
--- lvim.lsp.installer.setup.automatic_installation = false
+lvim.lsp.installer.setup.automatic_installation = true
 
 -- ---configure a server manually. IMPORTANT: Requires `:LvimCacheReset` to take effect
 -- ---see the full default list `:lua =lvim.lsp.automatic_configuration.skipped_servers`
@@ -96,6 +97,7 @@ lvim.builtin.treesitter.auto_install = true
 
 -- -- Additional Plugins <https://www.lunarvim.org/docs/plugins#user-plugins>
 lvim.plugins = {
+  { "ellisonleao/gruvbox.nvim" },
   {
     "folke/trouble.nvim",
     cmd = "TroubleToggle",
